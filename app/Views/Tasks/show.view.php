@@ -31,10 +31,7 @@
 
         <br><br>
 
-        <div id="addDelete">
-            <br>
-            <a href="/add">Add Task</a><br>
-        </div>
+        <?php require_once 'app/Views/Partials/menu.php';?>
 
     </div>
 

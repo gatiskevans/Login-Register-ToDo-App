@@ -8,6 +8,12 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('GET', '/add', 'ToDoController@showAddTask');
     $r->addRoute('POST', '/add', 'ToDoController@addTask');
     $r->addRoute('POST', '/todo/{id}', 'ToDoController@deleteTask');
+
+    $r->addRoute('GET', '/login', 'UserController@loginView');
+    $r->addRoute('POST', '/welcome', 'UserController@login');
+    $r->addRoute('GET', '/register', 'UserController@registerView');
+    $r->addRoute('POST', '/registered', 'UserController@confirmation');
+    $r->addRoute('GET', '/users', 'UserController@showUsers');
 });
 
 // Fetch method and URI from somewhere
