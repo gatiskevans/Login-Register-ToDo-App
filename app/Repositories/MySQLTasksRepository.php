@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Collections\TasksCollection;
 use App\Models\Record;
+use App\MySQLConnect\MySQLConnect;
 
 class MySQLTasksRepository extends MySQLConnect implements TasksRepository
 {
