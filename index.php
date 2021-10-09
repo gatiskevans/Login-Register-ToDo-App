@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require 'vendor/autoload.php';
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
@@ -10,10 +12,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/todo/{id}', 'ToDoController@deleteTask');
 
     $r->addRoute('GET', '/login', 'UserController@loginView');
-    $r->addRoute('POST', '/welcome', 'UserController@login');
+    $r->addRoute('POST', '/login', 'UserController@login');
     $r->addRoute('GET', '/register', 'UserController@registerView');
-    $r->addRoute('POST', '/registered', 'UserController@confirmation');
+    $r->addRoute('POST', '/register', 'UserController@register');
+    $r->addRoute('GET', '/registered', 'UserController@confirmationView');
     $r->addRoute('GET', '/users', 'UserController@showUsers');
+    $r->addRoute('GET', '/success', 'UserController@loginSuccess');
+    $r->addRoute('GET', '/logout', 'UserController@logout');
 });
 
 // Fetch method and URI from somewhere

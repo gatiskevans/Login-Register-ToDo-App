@@ -1,6 +1,6 @@
 <?php require_once 'app/Views/Partials/header.php'; ?>
 <h1>Login Form</h1>
-<form action="/welcome" method="post">
+<form action="/login" method="post">
     <label for="user">Enter name: </label><br>
     <input type="text" id="user" name="user" /><br>
     <label for="password">Enter password: </label><br>

@@ -23,19 +23,15 @@ class UserController
         require_once 'app/Views/Users/showUsers.php';
     }
 
-    public function loginView(): void
-    {
-        require_once 'app/Views/Users/userLogin.php';
-    }
-
-    public function registerView(): void
-    {
-        require_once 'app/Views/Users/userRegister.php';
-    }
-
     public function login(): void
     {
-        var_dump($_POST['login']);die;
+        $this->usersRepository->login();
+    }
+
+    public function logout(): void
+    {
+        $this->usersRepository->logout();
+        header('Location: /');
     }
 
     public function register(): void
@@ -49,10 +45,26 @@ class UserController
         );
 
         $this->usersRepository->register($user);
+        header('Location: /registered');
     }
 
-    public function confirmation(): void
+    public function confirmationView(): void
     {
         require_once 'app/Views/Users/confirmation.php';
+    }
+
+    public function loginView(): void
+    {
+        require_once 'app/Views/Users/userLogin.php';
+    }
+
+    public function registerView(): void
+    {
+        require_once 'app/Views/Users/userRegister.php';
+    }
+
+    public function loginSuccess(): void
+    {
+        require_once 'app/Views/Users/loginSuccess.php';
     }
 }

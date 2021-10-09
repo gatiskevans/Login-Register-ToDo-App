@@ -1,4 +1,5 @@
 <?php require_once 'app/Views/Partials/header.php'; ?>
+<?php require_once 'app/Views/Partials/welcome.php'; ?>
 
     <?php foreach($users->getAllUsers() as $user): ?>
 

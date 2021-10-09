@@ -8,7 +8,6 @@ use App\MySQLConnect\MySQLConnect;
 
 class MySQLUsersRepository extends MySQLConnect implements UsersRepository
 {
-
     public function getAllUsers(): UsersCollection
     {
         $usersCollection = new UsersCollection();
@@ -33,7 +32,30 @@ class MySQLUsersRepository extends MySQLConnect implements UsersRepository
         $this->connect()->prepare($sql)->execute([
             ':user_id' => $user->getId(),
             ':user_name' => $user->getName(),
-            ':password' => password_hash($_POST['password'], PASSWORD_BCRYPT)
+            ':password' => md5($_POST['password'])
         ]);
+    }
+
+    public function login(): void
+    {
+        $password = md5($_POST['password']);
+        $sql = "SELECT * FROM users WHERE user_name=:user_name AND password=:password";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([
+            'user_name' => $_POST['user'],
+            'password' => $password
+        ]);
+
+        if($stmt->rowCount() > 0){
+            $_SESSION['user_name'] = $_POST['user'];
+            header('Location: /success');
+        } else {
+            header('Location: /');
+        }
+    }
+
+    public function logout(): void
+    {
+        session_destroy();
     }
 }

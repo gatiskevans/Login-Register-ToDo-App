@@ -1,6 +1,7 @@
 <?php require_once 'app/Views/Partials/header.php'; ?>
+<?php require_once 'app/Views/Partials/welcome.php'; ?>
 <h1>Registration Form</h1>
-<form action="/confirmation" method="post">
+<form action="/register" method="post">
     <label for="username">Enter Your name: </label><br>
     <input type="text" id="username" name="username" /><br>
     <label for="password">Choose Password: </label><br>

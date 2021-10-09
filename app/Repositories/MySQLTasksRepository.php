@@ -8,7 +8,6 @@ use App\MySQLConnect\MySQLConnect;
 
 class MySQLTasksRepository extends MySQLConnect implements TasksRepository
 {
-
     public function fetchAllRecords(): TasksCollection
     {
         $tasksCollection = new TasksCollection();
