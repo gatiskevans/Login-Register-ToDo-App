@@ -21,7 +21,6 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('GET', '/registered', 'UserController@confirmationView');
 
     $r->addRoute('GET', '/users', 'UserController@showUsers');
-
 });
 
 // Fetch method and URI from somewhere
