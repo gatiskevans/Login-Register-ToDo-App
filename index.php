@@ -13,12 +13,15 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
     $r->addRoute('GET', '/login', 'UserController@loginView');
     $r->addRoute('POST', '/login', 'UserController@login');
+    $r->addRoute('GET', '/success', 'UserController@loginSuccess');
+    $r->addRoute('GET', '/logout', 'UserController@logout');
+
     $r->addRoute('GET', '/register', 'UserController@registerView');
     $r->addRoute('POST', '/register', 'UserController@register');
     $r->addRoute('GET', '/registered', 'UserController@confirmationView');
+
     $r->addRoute('GET', '/users', 'UserController@showUsers');
-    $r->addRoute('GET', '/success', 'UserController@loginSuccess');
-    $r->addRoute('GET', '/logout', 'UserController@logout');
+
 });
 
 // Fetch method and URI from somewhere
