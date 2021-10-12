@@ -6,16 +6,20 @@ use App\Models\Record;
 use App\Repositories\CsvTasksRepository;
 use App\Repositories\MySQLTasksRepository;
 use App\Repositories\TasksRepository;
+use App\Validation\FormValidationException;
+use App\Validation\TasksValidator;
 use Ramsey\Uuid\Uuid;
 
 class ToDoController
 {
     private TasksRepository $tasksRepository;
+    private TasksValidator $tasksValidator;
 
     public function __construct()
     {
         //$this->tasksRepository = new CsvTasksRepository('Storage/CSV/Tasks.csv');
         $this->tasksRepository = new MySQLTasksRepository();
+        $this->tasksValidator = new TasksValidator();
     }
 
     public function showTasks(): void
@@ -32,14 +36,22 @@ class ToDoController
 
     public function addTask(): void
     {
-        $record = new Record(
-            Uuid::uuid4(),
-            $_POST['task']
-        );
+        try{
+            $this->tasksValidator->validate($_POST);
 
-        $this->tasksRepository->save($record);
+            $record = new Record(
+                Uuid::uuid4(),
+                $_POST['task']
+            );
 
-        header('Location: /todo');
+            $this->tasksRepository->save($record);
+
+            header('Location: /todo');
+        } catch(FormValidationException $exception)
+        {
+            $_SESSION['_errors'] = $this->tasksValidator->getErrors();
+            header('Location: /add');
+        }
     }
 
     public function deleteTask(array $vars): void

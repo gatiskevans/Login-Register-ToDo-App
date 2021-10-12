@@ -47,6 +47,22 @@ class MySQLUsersRepository extends MySQLConnect implements UsersRepository
 
         $user = $statement->fetch();
 
+        return $this->buildUser($user);
+    }
+
+    public function getById(string $id): ?User
+    {
+        $sql = "SELECT * FROM users WHERE user_id = ?";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute([$id]);
+
+        $user = $statement->fetch();
+
+        return $this->buildUser($user);
+    }
+
+    private function buildUser(array $user): User
+    {
         return new user(
             $user['user_id'],
             $user['user_name'],

@@ -1,7 +1,7 @@
 <?php require_once 'app/Views/Partials/header.php'; ?>
 <?php require_once 'app/Views/Partials/welcome.php'; ?>
 
-<?php if(isset($_SESSION['user_name'])): ?>
+<?php if(isset($_SESSION['id'])): ?>
 
     <div id="container">
         <div id="list">

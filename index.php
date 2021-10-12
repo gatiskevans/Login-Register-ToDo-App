@@ -52,3 +52,5 @@ switch ($routeInfo[0]) {
         $controller->$method($vars);
         break;
 }
+
+unset($_SESSION['_errors']);
