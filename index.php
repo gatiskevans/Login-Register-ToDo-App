@@ -11,16 +11,15 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/add', 'ToDoController@addTask');
     $r->addRoute('POST', '/todo/{id}', 'ToDoController@deleteTask');
 
-    $r->addRoute('GET', '/login', 'UserController@loginView');
-    $r->addRoute('POST', '/login', 'UserController@login');
-    $r->addRoute('GET', '/success', 'UserController@loginSuccess');
-    $r->addRoute('GET', '/logout', 'UserController@logout');
+    $r->addRoute('GET', '/login', 'AuthController@loginView');
+    $r->addRoute('POST', '/login', 'AuthController@login');
+    $r->addRoute('GET', '/success', 'AuthController@loginSuccess');
 
-    $r->addRoute('GET', '/register', 'UserController@registerView');
-    $r->addRoute('POST', '/register', 'UserController@register');
-    $r->addRoute('GET', '/registered', 'UserController@confirmationView');
+    $r->addRoute('GET', '/logout', 'AuthController@logout');
 
-    $r->addRoute('GET', '/users', 'UserController@showUsers');
+    $r->addRoute('GET', '/register', 'AuthController@registerView');
+    $r->addRoute('POST', '/register', 'AuthController@register');
+    $r->addRoute('GET', '/registered', 'AuthController@confirmationView');
 });
 
 // Fetch method and URI from somewhere

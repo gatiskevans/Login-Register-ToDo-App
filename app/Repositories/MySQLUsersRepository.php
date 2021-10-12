@@ -18,44 +18,40 @@ class MySQLUsersRepository extends MySQLConnect implements UsersRepository
 
             $usersCollection->add(new User(
                 $row['user_id'],
-                $row['user_name']
+                $row['user_name'],
+                $row['email'],
+                $row['password']
             ));
         }
 
         return $usersCollection;
     }
 
-    public function register(User $user): void
+    public function save(User $user): void
     {
-        $sql = "INSERT INTO users (user_id, user_name, password) VALUES (:user_id, :user_name, :password)";
-
-        $this->connect()->prepare($sql)->execute([
+        $sql = "INSERT INTO users (user_id, user_name, email, password) VALUES (:user_id, :user_name, :email, :password)";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute([
             ':user_id' => $user->getId(),
             ':user_name' => $user->getName(),
-            ':password' => md5($_POST['password'])
+            ':email' => $user->getEmail(),
+            ':password' => $user->getPassword()
         ]);
     }
 
-    public function login(): void
+    public function getByEmail(string $email): ?User
     {
-        $password = md5($_POST['password']);
-        $sql = "SELECT * FROM users WHERE user_name=:user_name AND password=:password";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([
-            'user_name' => $_POST['user'],
-            'password' => $password
-        ]);
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute([$email]);
 
-        if($stmt->rowCount() > 0){
-            $_SESSION['user_name'] = $_POST['user'];
-            header('Location: /success');
-        } else {
-            header('Location: /');
-        }
-    }
+        $user = $statement->fetch();
 
-    public function logout(): void
-    {
-        session_destroy();
+        return new user(
+            $user['user_id'],
+            $user['user_name'],
+            $user['email'],
+            $user['password']
+        );
     }
 }

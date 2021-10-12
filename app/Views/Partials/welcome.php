@@ -1,7 +1,7 @@
 <?php
 
-if(isset($_SESSION['user_name'])){
-    echo "Welcome, {$_SESSION['user_name']}! ";
+if(isset($_SESSION['id'])){
+    echo "Welcome, {$_SESSION['id']}! ";
     echo "<a href='/logout'>Logout</a><br>";
 } else {
     echo "Welcome, guest! ";
