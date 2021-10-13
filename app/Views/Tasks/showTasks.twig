@@ -1,0 +1,68 @@
+{% extends "app.twig" %}
+
+{% block welcome %}
+    {% if session.id is defined %}
+
+        Welcome {{ session.id }}
+        <a href='/logout'>Logout</a><br>
+
+    {% else %}
+
+        Welcome, guest!
+        <a href='/login'>Login</a><br>
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <div id="container">
+        <div id="list">
+            <h2>ToDo App</h2>
+            <br>
+            <table>
+
+                {% if session.id is defined %}
+
+                {% for task in tasks.getListOfTasks %}
+                    <tbody>
+
+                    <td><b>{{ task.getTask }}</b></td>
+                    <td><small> {{ task.getTimeCreated }} </small></td>
+                    <td> {{ task.getStatus }} </td>
+
+                    <td>
+                        <form action="/todo/{{ task.getId }}" method="post">
+                            <button type="submit">X</button>
+                        </form>
+                    </td>
+                    </tbody>
+                {% endfor %}
+
+                {% endif %}
+
+                {% if tasks.getListOfTasks|length == 0 %}
+                    <td><b>There are no contents in ToDo list yet!</b></td>
+                {% endif %}
+
+            </table>
+        </div>
+    </div>
+
+    <br><br>
+
+{% endblock %}
+
+{% block menu %}
+    {% if session.id is defined %}
+
+        <div>
+            <br><a href="/add">Add Task</a><br>
+        </div>
+
+    {% endif %}
+
+    <div>
+        <a href="/register">Register User</a><br>
+    </div>
+{% endblock %}

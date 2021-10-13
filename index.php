@@ -1,8 +1,12 @@
 <?php
 
-session_start();
+use App\View;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 require 'vendor/autoload.php';
+
+session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', 'ToDoController@showTasks');
@@ -21,6 +25,10 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/register', 'AuthController@register');
     $r->addRoute('GET', '/registered', 'AuthController@confirmationView');
 });
+
+$loader = new FilesystemLoader('app/Views');
+$templateEngine = new Environment($loader, []);
+$templateEngine->addGlobal('session', $_SESSION);
 
 // Fetch method and URI from somewhere
 $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -49,7 +57,12 @@ switch ($routeInfo[0]) {
         [$controller, $method] = explode('@', $handler);
         $controller = "App\\Controllers\\" . $controller;
         $controller = new $controller;
-        $controller->$method($vars);
+        $response = $controller->$method($vars);
+
+        if($response instanceof View){
+            echo $templateEngine->render($response->getTemplate(), $response->getVariables());
+        }
+
         break;
 }
 

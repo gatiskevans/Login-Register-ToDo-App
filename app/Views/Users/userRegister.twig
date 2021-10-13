@@ -1,5 +1,18 @@
-<?php require_once 'app/Views/Partials/header.php'; ?>
-<?php require_once 'app/Views/Partials/welcome.php'; ?>
+{% extends "app.twig" %}
+{% block welcome %}
+    {% if session.id is defined %}
+
+        Welcome {{ session.id }}
+        <a href='/logout'>Logout</a><br>
+
+    {% else %}
+
+        Welcome, guest!
+        <a href='/login'>Login</a><br>
+
+    {% endif %}
+{% endblock %}
+{% block content %}
 <h1>Registration Form</h1>
 <form action="/register" method="post">
     <label for="username">Enter Your name: </label><br>
@@ -19,5 +32,4 @@
 
 <br>
 <a href="/todo">Back to Task List</a>
-
-<?php require_once 'app/Views/Partials/footer.php'; ?>
+{% endblock %}

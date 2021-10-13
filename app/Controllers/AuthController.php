@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Repositories\MySQLUsersRepository;
 use App\Validation\AuthValidator;
 use App\Validation\FormValidationException;
+use App\View;
 use Ramsey\Uuid\Uuid;
 
 class AuthController
@@ -20,20 +21,20 @@ class AuthController
         $this->authValidator = new AuthValidator();
     }
 
-    public function loginView(): void
+    public function loginView(): View
     {
-        if(Authentication::loggedIn()) header('Location: /');
-        require_once 'app/Views/Users/userLogin.php';
+        if (Authentication::loggedIn()) header('Location: /');
+        return new View('Users/userLogin.twig');
     }
 
-    public function registerView(): void
+    public function registerView(): View
     {
-        require_once 'app/Views/Users/userRegister.php';
+        return new View('Users/userRegister.twig');
     }
 
     public function register(): void
     {
-        try{
+        try {
             $this->authValidator->validate($_POST);
 
             $this->usersRepository->save(new User(
@@ -44,32 +45,33 @@ class AuthController
             ));
 
             header('Location: /');
-        } catch(FormValidationException $exception) {
+        } catch (FormValidationException $exception) {
             $_SESSION['_errors'] = $this->authValidator->getErrors();
             header('Location: /register');
+            exit;
         }
     }
 
     public function login(): void
     {
-        try{
+        try {
             $this->authValidator->validateLogin($_POST);
 
-            if(Authentication::loggedIn()) header('Location: /');
+            if (Authentication::loggedIn()) header('Location: /');
 
             $user = $this->usersRepository->getByEmail($_POST['email']);
 
-            if($user !== null && password_verify($_POST['password'], $user->getPassword())){
+            if ($user !== null && password_verify($_POST['password'], $user->getPassword())) {
                 $_SESSION['id'] = $user->getId();
                 header('Location: /todo');
             } else {
                 header('Location: /login');
             }
 
-        } catch(FormValidationException $exception)
-        {
+        } catch (FormValidationException $exception) {
             $_SESSION['_errors'] = $this->authValidator->getErrors();
             header('Location: /login');
+            exit;
         }
 
     }

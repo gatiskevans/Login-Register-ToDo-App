@@ -13,12 +13,11 @@ class TasksValidator
 
     public function validate(array $data): void
     {
-        if(!isset($data['task']) || empty($data['task']))
-        {
+        if (!isset($data['task']) || empty($data['task'])) {
             $this->errors['task'] = "Task must be required";
         }
 
-        if(count($this->errors) > 0) {
+        if (count($this->errors) > 0) {
             throw new FormValidationException();
         }
     }

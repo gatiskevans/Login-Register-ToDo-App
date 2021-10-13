@@ -14,7 +14,7 @@ class MySQLUsersRepository extends MySQLConnect implements UsersRepository
 
         $statement = $this->connect()->query("SELECT * FROM users");
 
-        foreach($statement->fetchAll() as $row){
+        foreach ($statement->fetchAll() as $row) {
 
             $usersCollection->add(new User(
                 $row['user_id'],

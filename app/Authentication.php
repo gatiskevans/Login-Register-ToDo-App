@@ -14,7 +14,7 @@ class Authentication
 
     public static function user(): ?User
     {
-        if(!self::loggedIn()) return null;
+        if (!self::loggedIn()) return null;
 
         $userRepository = new MySQLUsersRepository();
         return $userRepository->getById($_SESSION['id']);

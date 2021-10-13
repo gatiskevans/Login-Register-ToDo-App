@@ -8,6 +8,7 @@ use App\Repositories\MySQLTasksRepository;
 use App\Repositories\TasksRepository;
 use App\Validation\FormValidationException;
 use App\Validation\TasksValidator;
+use App\View;
 use Ramsey\Uuid\Uuid;
 
 class ToDoController
@@ -22,21 +23,21 @@ class ToDoController
         $this->tasksValidator = new TasksValidator();
     }
 
-    public function showTasks(): void
+    public function showTasks(): View
     {
         $tasks = $this->tasksRepository->fetchAllRecords();
 
-        require_once 'app/Views/Tasks/show.view.php';
+        return new View('Tasks/showTasks.twig', ['tasks' => $tasks]);
     }
 
-    public function showAddTask(): void
+    public function showAddTask(): View
     {
-        require_once 'app/Views/Tasks/add.view.php';
+        return new View('Tasks/add.twig');
     }
 
     public function addTask(): void
     {
-        try{
+        try {
             $this->tasksValidator->validate($_POST);
 
             $record = new Record(
@@ -47,10 +48,10 @@ class ToDoController
             $this->tasksRepository->save($record);
 
             header('Location: /todo');
-        } catch(FormValidationException $exception)
-        {
+        } catch (FormValidationException $exception) {
             $_SESSION['_errors'] = $this->tasksValidator->getErrors();
             header('Location: /add');
+            exit;
         }
     }
 
