@@ -24,20 +24,20 @@
 
                 {% if session.id is defined %}
 
-                {% for task in tasks.getListOfTasks %}
-                    <tbody>
+                    {% for task in tasks.getListOfTasks %}
+                        <tbody>
 
-                    <td><b>{{ task.getTask }}</b></td>
-                    <td><small> {{ task.getTimeCreated }} </small></td>
-                    <td> {{ task.getStatus }} </td>
+                        <td><b>{{ task.getTask }}</b></td>
+                        <td><small> {{ task.getTimeCreated }} </small></td>
+                        <td> {{ task.getStatus }} </td>
 
-                    <td>
-                        <form action="/todo/{{ task.getId }}" method="post">
-                            <button type="submit">X</button>
-                        </form>
-                    </td>
-                    </tbody>
-                {% endfor %}
+                        <td>
+                            <form action="/todo/{{ task.getId }}" method="post">
+                                <button type="submit">X</button>
+                            </form>
+                        </td>
+                        </tbody>
+                    {% endfor %}
 
                 {% endif %}
 

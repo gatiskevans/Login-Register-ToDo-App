@@ -59,7 +59,7 @@ switch ($routeInfo[0]) {
         $controller = new $controller;
         $response = $controller->$method($vars);
 
-        if($response instanceof View){
+        if ($response instanceof View) {
             echo $templateEngine->render($response->getTemplate(), $response->getVariables());
         }
 

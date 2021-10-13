@@ -10,7 +10,7 @@ class UsersCollection
 
     public function __construct(array $users = [])
     {
-        foreach($users as $user){
+        foreach ($users as $user) {
             $this->add($user);
         }
     }
