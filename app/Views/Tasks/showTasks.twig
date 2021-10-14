@@ -12,6 +12,9 @@
         <a href='/login'>Login</a><br>
 
     {% endif %}
+
+    <a href="/settings">Edit</a>
+
 {% endblock %}
 
 {% block content %}
@@ -36,6 +39,7 @@
                                 <button type="submit">X</button>
                             </form>
                         </td>
+                        <td><a href="/edit/{{ task.getId }}">Edit</a> </td>
                         </tbody>
                     {% endfor %}
 

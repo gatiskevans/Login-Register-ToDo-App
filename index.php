@@ -15,11 +15,15 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/add', 'ToDoController@addTask');
     $r->addRoute('POST', '/todo/{id}', 'ToDoController@deleteTask');
 
+    $r->addRoute('GET', '/edit/{id}', 'ToDoController@showEdit');
+    $r->addRoute('POST', '/edit/{id}', 'ToDoController@editTask');
+
     $r->addRoute('GET', '/login', 'AuthController@loginView');
     $r->addRoute('POST', '/login', 'AuthController@login');
     $r->addRoute('GET', '/success', 'AuthController@loginSuccess');
 
     $r->addRoute('GET', '/logout', 'AuthController@logout');
+    $r->addRoute('GET', '/settings', 'AuthController@showEdit');
 
     $r->addRoute('GET', '/register', 'AuthController@registerView');
     $r->addRoute('POST', '/register', 'AuthController@register');

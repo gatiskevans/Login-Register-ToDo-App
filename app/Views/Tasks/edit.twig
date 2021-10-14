@@ -1,0 +1,28 @@
+{% extends "app.twig" %}
+{% block welcome %}
+    {% if session.id is defined %}
+
+        Welcome {{ session.id }}
+        <a href='/logout'>Logout</a><br>
+
+    {% else %}
+
+        Welcome, guest!
+        <a href='/login'>Login</a><br>
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <br>
+
+    <form method="post" action="/edit/{{ task.getId }}">
+            <label for="task"><b id="editTask">Edit Task:</b></label><br><br>
+            <input type="text" name="task" id="task" value="{{ task.getTask }}" /><br><br>
+            <input type="submit" name="editTask" value="Add"/>
+    </form>
+
+    <br>
+    <a href="/todo">Back to Task List</a>
+
+{% endblock %}

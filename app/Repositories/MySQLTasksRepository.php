@@ -50,6 +50,15 @@ class MySQLTasksRepository extends MySQLConnect implements TasksRepository
         );
     }
 
+    public function edit(Record $task, $editedTask): void
+    {
+        $sql = "UPDATE tasks SET task=:task WHERE id=:id";
+        $this->connect()->prepare($sql)->execute([
+            ':id' => $task->getId(),
+            ':task' => $editedTask
+        ]);
+    }
+
     public function delete(Record $record): void
     {
         $this->connect()->prepare("DELETE FROM tasks WHERE id=?")->execute([$record->getId()]);

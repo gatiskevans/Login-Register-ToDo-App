@@ -35,6 +35,26 @@ class ToDoController
         return new View('Tasks/add.twig');
     }
 
+    public function showEdit(array $vars): View
+    {
+        $id = $vars['id'] ?? null;
+        if ($id == null) header('Location: /');
+        $task = $this->tasksRepository->getOne($id);
+
+        return new View('Tasks/edit.twig', ['task' => $task]);
+    }
+
+    public function editTask(array $vars): void
+    {
+        $id = $vars['id'] ?? null;
+        if ($id == null) header('Location: /');
+
+        $task = $this->tasksRepository->getOne($id);
+
+        if ($task != null) $this->tasksRepository->edit($task, $_POST['task']);
+        header('Location: /');
+    }
+
     public function addTask(): void
     {
         try {

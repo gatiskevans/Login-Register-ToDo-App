@@ -32,6 +32,12 @@ class AuthController
         return new View('Users/userRegister.twig');
     }
 
+    public function showEdit(array $vars): ?View
+    {
+        if (!Authentication::loggedIn()) return null;
+        return new View('Users/settings.twig');
+    }
+
     public function register(): void
     {
         try {
@@ -73,7 +79,6 @@ class AuthController
             header('Location: /login');
             exit;
         }
-
     }
 
     public function logout(): void
